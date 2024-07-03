@@ -1,13 +1,14 @@
 import { Request, Response } from "express";
 import { OrdersService } from "./orders.service";
+import { IOrders } from "./orders.interface";
 
 const createOrder = async (req: Request, res: Response) => {
   try {
-    const order = req.body;
+    const order: IOrders = req.body;
     const result = await OrdersService.createOrderIntoDB(order);
     res.status(200).json({
       success: true,
-      message: "Product created successfully",
+      message: "Order created successfully",
       data: result,
     });
   } catch (error: any) {
@@ -24,7 +25,7 @@ const getAllOrders = async (req: Request, res: Response) => {
     const result = await OrdersService.getAllOrdersFromDB();
     res.status(200).json({
       success: true,
-      message: "Products fetched successfully!",
+      message: "Orders fetched successfully!",
       data: result,
     });
   } catch (error: any) {
@@ -35,26 +36,26 @@ const getAllOrders = async (req: Request, res: Response) => {
     });
   }
 };
-const getSingleOrder = async (req: Request, res: Response) => {
+
+const findByEmail = async (req: Request, res: Response) => {
   try {
-    const id = req.params.productId;
-    const result = await OrdersService.getSingleOrderFromDB(id);
+    const email = req.params.email;
+    const result = await OrdersService.findOrdersByEmail(email);
     res.status(200).json({
       success: true,
-      message: "Order fetched successfully!",
+      message: `Orders fetched successfully for ${email}!`,
       data: result,
     });
   } catch (error: any) {
-    res.status(500).json({
+    res.status(400).json({
       success: false,
       message: "Couldn't find order from db",
       error: error.message,
     });
   }
 };
-
 export const OrdersController = {
   createOrder,
   getAllOrders,
-  getSingleOrder,
+  findByEmail,
 };

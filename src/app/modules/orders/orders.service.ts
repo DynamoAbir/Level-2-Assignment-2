@@ -1,10 +1,38 @@
-import { Types } from "mongoose";
+import { IProduct } from "../products/product.interface";
+import { ProductsService } from "../products/product.service";
 import { IOrders } from "./orders.interface";
 import MOrders from "./orders.model";
 
 const createOrderIntoDB = async (order: IOrders) => {
-  const result = await MOrders.create(order);
-  return result;
+  try {
+    const product: IProduct | null =
+      await ProductsService.getSingleProductFromDB(order.productId);
+
+    if (!product) {
+      throw new Error("Product not found");
+    }
+    if (order.quantity > product.inventory.quantity) {
+      throw new Error("Insufficient stock");
+    }
+    if (!product._id) {
+      throw new Error("Product ID is missing");
+    }
+
+    const updatedQuantity = product.inventory.quantity - order.quantity;
+    const inStock = updatedQuantity > 0;
+
+    await ProductsService.updateSingleProductFromDB(product._id, {
+      inventory: {
+        quantity: updatedQuantity,
+        inStock: inStock,
+      },
+    });
+
+    const result = await MOrders.create(order);
+    return result;
+  } catch (error) {
+    throw error;
+  }
 };
 
 const getAllOrdersFromDB = async () => {
@@ -12,13 +40,13 @@ const getAllOrdersFromDB = async () => {
   return result;
 };
 
-const getSingleOrderFromDB = async (id: string) => {
-  const result = await MOrders.findOne({ _id: new Types.ObjectId(id) });
+const findOrdersByEmail = async (email: string) => {
+  const result = await MOrders.find({ email: email });
   return result;
 };
 
 export const OrdersService = {
   createOrderIntoDB,
   getAllOrdersFromDB,
-  getSingleOrderFromDB,
+  findOrdersByEmail,
 };
