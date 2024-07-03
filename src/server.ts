@@ -1,5 +1,7 @@
 import { app } from "./app";
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+dotenv.config();
 
 const port = 5001;
 
@@ -7,12 +9,10 @@ main().catch((err) => console.log(err));
 
 async function main() {
   try {
-    await mongoose.connect(
-      "mongodb+srv://assignment2:f3jvN8h10QRIdcxQ@cluster0.xv9x1yp.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster0"
-    );
-    console.log("Database connected");
+    await mongoose.connect(process.env.DB_URL as string);
+    console.log("Database Connected");
     app.listen(port, () => {
-      console.log(`Example app listening on port ${port}`);
+      console.log(`Example app listening on port ${process.env.PORT}`);
     });
   } catch (error) {
     console.log(error);
