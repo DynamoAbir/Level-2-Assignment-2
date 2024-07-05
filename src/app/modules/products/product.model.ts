@@ -4,7 +4,7 @@ import { IProduct, IVariant } from "./product.interface";
 
 const InventorySchema = new Schema({
   quantity: { type: Number, required: true },
-  inStock: { type: String, required: true },
+  inStock: { type: Boolean, required: true },
 });
 
 const VariantSchema = new Schema<IVariant>({

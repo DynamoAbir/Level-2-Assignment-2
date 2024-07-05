@@ -1,30 +1,41 @@
 import { z } from "zod";
 const inventoryValidationSchema = z.object({
-  quantity: z
-    .number()
-    .int({ message: "Quantity must be an integer" })
-    .positive({ message: "Quantity must be a positive number" })
-    .nonnegative({ message: "Quantity must be a non-negative number" }),
-  inStock: z.string().min(1, { message: "In stock status is required" }),
+  quantity: z.number({
+    required_error: "Quantity is required",
+  }),
+  inStock: z.boolean({
+    required_error: "InStock is required",
+  }),
 });
 
 const variantValidationSchema = z.object({
-  type: z.string().min(1, { message: "Variant type is required" }),
-  value: z.string().min(1, { message: "Variant value is required" }),
+  type: z.string({
+    required_error: "Variant type is required",
+  }),
+  value: z.string({
+    required_error: "Variant value is required",
+  }),
 });
 
 const productValidationSchema = z.object({
-  name: z.string().min(1, { message: "Product name is required" }),
-  description: z
-    .string()
-    .min(1, { message: "Product description is required" }),
-  price: z.number().positive({ message: "Price must be a positive number" }),
-  category: z.string().min(1, { message: "Category is required" }),
-  tags: z
-    .array(z.string().min(1, { message: "Tag must be a non-empty string" }))
-    .nonempty({ message: "Tags array must contain at least one tag" }),
+  _id: z.string().optional(),
+  name: z.string({
+    required_error: "Name is required",
+  }),
+  description: z.string({
+    required_error: "Description is required",
+  }),
+  price: z.number({
+    required_error: "Price is required",
+  }),
+  category: z.string({
+    required_error: "Category is required",
+  }),
+  tags: z.array(z.string(), {
+    required_error: "Tags are required",
+  }),
   variants: z.array(variantValidationSchema).default([]),
   inventory: inventoryValidationSchema,
 });
 
-export { productValidationSchema };
+export default productValidationSchema;

@@ -12,4 +12,4 @@ const orderValidationSchema = z.object({
     .int({ message: "Quanitity must be an integer" })
     .positive({ message: "Quantity must be a positive number" }),
 });
-export { orderValidationSchema };
+export default orderValidationSchema;
