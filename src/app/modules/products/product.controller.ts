@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { ProductsService } from "./product.service";
 import productValidationSchema from "./product.validation";
-import { IProduct } from "./product.interface";
 
 const createProduct = async (req: Request, res: Response) => {
   try {
@@ -13,7 +12,7 @@ const createProduct = async (req: Request, res: Response) => {
       message: "Product created successfully",
       data: result,
     });
-  } catch (error: any) {
+  } catch (error) {
     res.status(500).json({
       success: false,
       message: "Couldn't create Product into db",
@@ -30,7 +29,7 @@ const getAllProducts = async (req: Request, res: Response) => {
       message: "Products fetched successfully!",
       data: result,
     });
-  } catch (error: any) {
+  } catch (error) {
     res.status(404).json({
       success: false,
       message: "Couldn't find Products from db",
@@ -47,7 +46,7 @@ const getSingleProduct = async (req: Request, res: Response) => {
       message: "Product fetched successfully!",
       data: result,
     });
-  } catch (error: any) {
+  } catch (error) {
     res.status(500).json({
       success: false,
       message: "Couldn't find Product from db",
@@ -65,7 +64,7 @@ const updateProduct = async (req: Request, res: Response) => {
       message: "Product updated successfully!",
       data: result,
     });
-  } catch (error: any) {
+  } catch (error) {
     res.status(400).json({
       success: false,
       message: "Couldn't find Product from db",
@@ -77,13 +76,13 @@ const updateProduct = async (req: Request, res: Response) => {
 const deleteProduct = async (req: Request, res: Response) => {
   try {
     const productId = req.params.productId;
-    const result = await ProductsService.deleteSingleProductFromDB(productId);
+    await ProductsService.deleteSingleProductFromDB(productId);
     res.status(500).json({
       success: true,
       message: "Prodcut deleted successfully",
       data: null,
     });
-  } catch (error: any) {
+  } catch (error) {
     res.status(400).json({
       success: false,
       message: "Couldn't find Product from db",
@@ -100,7 +99,7 @@ const findByTags = async (req: Request, res: Response) => {
       message: `Products matching search term ${tag} fetched successfully!`,
       data: result,
     });
-  } catch (error: any) {
+  } catch (error) {
     res.status(400).json({
       success: false,
       message: "Couldn't find Product from db",

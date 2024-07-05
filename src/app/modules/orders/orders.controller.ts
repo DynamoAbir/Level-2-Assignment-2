@@ -13,7 +13,7 @@ const createOrder = async (req: Request, res: Response) => {
       message: "Order created successfully",
       data: result,
     });
-  } catch (error: any) {
+  } catch (error) {
     res.status(500).json({
       success: false,
       message: "Couldn't create order into db",
@@ -30,7 +30,7 @@ const getAllOrders = async (req: Request, res: Response) => {
       message: "Orders fetched successfully!",
       data: result,
     });
-  } catch (error: any) {
+  } catch (error) {
     res.status(404).json({
       success: false,
       message: "Couldn't find orders from db",
@@ -48,7 +48,7 @@ const findByEmail = async (req: Request, res: Response) => {
       message: `Orders fetched successfully for ${email}!`,
       data: result,
     });
-  } catch (error: any) {
+  } catch (error) {
     res.status(400).json({
       success: false,
       message: "Couldn't find order from db",
