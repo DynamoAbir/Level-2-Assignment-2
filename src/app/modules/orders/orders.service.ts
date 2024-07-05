@@ -12,7 +12,7 @@ const createOrderIntoDB = async (order: IOrders) => {
       throw new Error("Product not found");
     }
     if (order.quantity > product.inventory.quantity) {
-      throw new Error("Insufficient stock");
+      throw new Error("Insufficient quantity available in inventory");
     }
     if (!product._id) {
       throw new Error("Product ID is missing");
