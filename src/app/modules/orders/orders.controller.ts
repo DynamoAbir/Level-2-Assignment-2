@@ -17,7 +17,6 @@ const createOrder = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Couldn't create order into db",
-      error: error.message,
     });
   }
 };
@@ -34,7 +33,6 @@ const getAllOrders = async (req: Request, res: Response) => {
     res.status(404).json({
       success: false,
       message: "Couldn't find orders from db",
-      error: error.message,
     });
   }
 };
@@ -52,7 +50,6 @@ const findByEmail = async (req: Request, res: Response) => {
     res.status(400).json({
       success: false,
       message: "Couldn't find order from db",
-      error: error.message,
     });
   }
 };

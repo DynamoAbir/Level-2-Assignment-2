@@ -16,7 +16,6 @@ const createProduct = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Couldn't create Product into db",
-      error: error.message,
     });
   }
 };
@@ -33,7 +32,6 @@ const getAllProducts = async (req: Request, res: Response) => {
     res.status(404).json({
       success: false,
       message: "Couldn't find Products from db",
-      error: error.message,
     });
   }
 };
@@ -50,7 +48,6 @@ const getSingleProduct = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Couldn't find Product from db",
-      error: error.message,
     });
   }
 };
@@ -68,7 +65,6 @@ const updateProduct = async (req: Request, res: Response) => {
     res.status(400).json({
       success: false,
       message: "Couldn't find Product from db",
-      error: error.message,
     });
   }
 };
@@ -86,7 +82,6 @@ const deleteProduct = async (req: Request, res: Response) => {
     res.status(400).json({
       success: false,
       message: "Couldn't find Product from db",
-      error: error.message,
     });
   }
 };
@@ -103,7 +98,6 @@ const findByTags = async (req: Request, res: Response) => {
     res.status(400).json({
       success: false,
       message: "Couldn't find Product from db",
-      error: error.message,
     });
   }
 };
